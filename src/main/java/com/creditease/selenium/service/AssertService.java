@@ -9,7 +9,7 @@ public class AssertService {
 
     private static Logger logger = Logger.getLogger(AssertService.class);
 
-    public boolean assertPage(WebDriver driver, List list){
+    public static boolean assertPage(WebDriver driver, List list){
 
         boolean flag = true;
         try{

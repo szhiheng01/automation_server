@@ -8,7 +8,7 @@ public class DataBean {
     String frame;
     String type;
     String value;
-    String assertList;
+    List assertList;
 
     public String getXpath() {
         return Xpath;
@@ -42,11 +42,11 @@ public class DataBean {
         this.value = value;
     }
 
-    public String getAssertList() {
+    public List getAssertList() {
         return assertList;
     }
 
-    public void setAssertList(String assertList) {
+    public void setAssertList(List assertList) {
         this.assertList = assertList;
     }
 

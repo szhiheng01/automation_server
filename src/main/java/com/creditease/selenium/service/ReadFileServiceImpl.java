@@ -63,7 +63,7 @@ public class ReadFileServiceImpl {
             bufferedReader = new BufferedReader(new FileReader(filePath));
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                if (line.split(",").length < 6) {
+                if (line.split(",").length < 5) {
                     logger.info("case 传餐有误！！");
                     return null;
                 } else {
@@ -101,7 +101,7 @@ public class ReadFileServiceImpl {
 
     @Test
     public void aaa() throws Exception {
-        List list = ReadFileServiceImpl.getList("aaaaaaaaaaa");
+        List list = ReadFileServiceImpl.getList("casefile");
         List gl = ReadFileServiceImpl.getContents(list);
         for (Object a : gl) {
             System.out.println(a);
