@@ -2,10 +2,19 @@ package com.creditease.selenium.bean;
 
 import java.util.List;
 
+/**
+ * @author songzhiheng
+ * @version V1.0
+ * @Description: TODO
+ * @date 2017/8/31 下午2:03
+ */
+
+
 public class DataBean {
 
     String Xpath;
     String frame;
+    String frame_xpath;
     String type;
     String value;
     List assertList;
@@ -24,6 +33,14 @@ public class DataBean {
 
     public void setFrame(String frame) {
         this.frame = frame;
+    }
+
+    public String getFrame_xpath() {
+        return frame_xpath;
+    }
+
+    public void setFrame_xpath(String frame_xpath) {
+        this.frame_xpath = frame_xpath;
     }
 
     public String getType() {
@@ -55,6 +72,7 @@ public class DataBean {
         return "DataBean{" +
                 "Xpath='" + Xpath + '\'' +
                 ", frame='" + frame + '\'' +
+                ", frame_xpath='" + frame_xpath + '\'' +
                 ", type='" + type + '\'' +
                 ", value='" + value + '\'' +
                 ", assertList=" + assertList +

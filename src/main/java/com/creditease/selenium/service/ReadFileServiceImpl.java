@@ -1,15 +1,22 @@
 package com.creditease.selenium.service;
 
 import com.creditease.selenium.Utils.ReadResourceUtils;
-import com.creditease.selenium.Utils.RepleceBeanUtils;
+import com.creditease.selenium.bean.FileBean;
 import org.apache.log4j.Logger;
-import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.LinkedList;
 import java.util.List;
+
+/**
+ * @author songzhiheng
+ * @version V1.0
+ * @Description: TODO
+ * @date 2017/8/31 下午2:03
+ */
+
 
 public class ReadFileServiceImpl {
 
@@ -18,16 +25,16 @@ public class ReadFileServiceImpl {
     /**
      * 判断是文件夹还是文件
      *
-     * @param path
+     * @param bean
      * @return
      * @throws Exception
      */
-    public static List<String> getList(String path) throws Exception {
+    public static List<String> getList(FileBean bean) throws Exception {
         List<String> list = new LinkedList<String>();
-        File file = ReadResourceUtils.getResourceFile(path);
+        File file = ReadResourceUtils.getResourceFile(bean.getFilePath());
         BufferedReader bufferedReader = null;
         if (!file.exists()) {
-            logger.info(path + "文件夹/不存在！！");
+            logger.info(bean.getFilePath() + "文件夹/不存在！！");
             return null;
         } else {
             File[] files = file.listFiles();
@@ -36,18 +43,28 @@ public class ReadFileServiceImpl {
                 for (File fileList : files) {
                     list.add(fileList.toString());
                 }
+                logger.info("files = " + files.toString());
             } else {
                 //如果是文件则读取文件内容
                 try {
+                    logger.info("file = " + file);
                     bufferedReader = new BufferedReader(new FileReader(file));
                     String line;
                     while ((line = bufferedReader.readLine()) != null) {
                         list.add(line);
+                        logger.info("line = " + line);
                     }
                 } catch (Exception e) {
-                    logger.info("文件读取失败");
+                    logger.info("ReadFileServiceImpl.getList()" + "文件读取失败");
                 } finally {
+                    try{
+                        if (bufferedReader == null){
+                            bufferedReader.close();
+                        }
                     bufferedReader.close();
+                    }catch (Exception e){
+                        logger.info("ReadFileServiceImpl = " + e);
+                    }
                 }
             }
         }
@@ -63,28 +80,30 @@ public class ReadFileServiceImpl {
             bufferedReader = new BufferedReader(new FileReader(filePath));
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                if (line.split(",").length < 5) {
+                if (line.split(",").length < 6) {
                     logger.info("case 传餐有误！！");
                     return null;
                 } else {
-                    list.add(RepleceBeanUtils.getDataBean(line));
+                    list.add(RepleceBeanServiceImpl.getDataBean(line));
                 }
             }
         } catch (Exception e) {
             logger.info(filePath + "读取文件失败！！");
         } finally {
-            bufferedReader.close();
+            if (bufferedReader == null){
+                bufferedReader.close();
+            }
         }
         return list;
     }
 
     //读取
-    public static List getContents(List<String> list) {
+    public static List getContents(List<String> list) throws Exception{
         List linkedList = new LinkedList();
         if (list != null && list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).split(",").length <= 5 && list.get(i).split(",").length > 2) {
-                    linkedList.add(RepleceBeanUtils.getDataBean(list.get(i)));
+                if (list.get(i).split(",").length <= 6 && list.get(i).split(",").length > 2) {
+                    linkedList.add(RepleceBeanServiceImpl.getDataBean(list.get(i)));
                 } else {
                     try {
                         linkedList.add(ReadFileServiceImpl.getContent(list.get(i)));
@@ -98,16 +117,5 @@ public class ReadFileServiceImpl {
         }
         return linkedList;
     }
-
-    @Test
-    public void aaa() throws Exception {
-        List list = ReadFileServiceImpl.getList("casefile");
-        List gl = ReadFileServiceImpl.getContents(list);
-        for (Object a : gl) {
-            System.out.println(a);
-
-        }
-    }
-
 
 }

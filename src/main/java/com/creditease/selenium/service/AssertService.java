@@ -5,6 +5,13 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
+/**
+ * @author songzhiheng
+ * @version V1.0
+ * @Description: TODO
+ * @date 2017/8/31 下午2:03
+ */
+
 public class AssertService {
 
     private static Logger logger = Logger.getLogger(AssertService.class);
@@ -24,8 +31,9 @@ public class AssertService {
                     }
                 }
             }
+            logger.info("list = " + list.toString());
         }catch (Exception e){
-            logger.info(e);
+            logger.info("AssertService e = " + e);
         }
         return flag;
     }

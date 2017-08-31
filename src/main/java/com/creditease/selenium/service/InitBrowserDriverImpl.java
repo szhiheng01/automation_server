@@ -1,11 +1,23 @@
 package com.creditease.selenium.service;
 
+import com.creditease.selenium.bean.DataBean;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author songzhiheng
+ * @version V1.0
+ * @Description: TODO
+ * @date 2017/8/31 下午2:03
+ */
 
 public class InitBrowserDriverImpl {
 
@@ -26,4 +38,5 @@ public class InitBrowserDriverImpl {
         }
         return driver;
     }
+
 }

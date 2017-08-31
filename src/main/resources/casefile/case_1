@@ -1,2 +1,2 @@
-xpath,1,1,key,[a、b、c]
-xpath,1,1,key,[a、b、c]
+//*[@id='kw'],2,,2,AAAA,[、、]
+//*[@id='su'],2,,1,,[、、]
