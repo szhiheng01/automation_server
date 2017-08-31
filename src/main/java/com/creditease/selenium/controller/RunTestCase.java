@@ -1,9 +1,14 @@
 package com.creditease.selenium.controller;
 
+import com.creditease.selenium.bean.FileBean;
 import com.creditease.selenium.service.InitBrowserDriverImpl;
+import com.creditease.selenium.service.ReadFileServiceImpl;
+import com.creditease.selenium.service.RunServiceImpl;
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+
+import java.util.List;
 
 /**
  * @author songzhiheng
@@ -14,18 +19,17 @@ import org.openqa.selenium.WebDriver;
 
 public class RunTestCase {
 
-    WebDriver driver;
-    @Test
-    public void testRunCase(){
-        driver = InitBrowserDriverImpl.initBrowser("chrome");
+    private static final String FILE_PATH = "casefile/";
+    public static void main(String[] args) throws Exception{
 
-
-    }
-
-    @After
-    public void quits() throws Exception{
-        Thread.sleep(3000);
+        WebDriver driver = InitBrowserDriverImpl.initBrowser("chrome");
+        List list = ReadFileServiceImpl.initBean(FILE_PATH);
+        RunServiceImpl.doRuns(list,driver);
+        Thread.sleep(2000);
         driver.quit();
+
     }
+
+
 
 }

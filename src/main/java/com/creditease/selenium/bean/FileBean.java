@@ -1,5 +1,7 @@
 package com.creditease.selenium.bean;
 
+import java.util.List;
+
 /**
  * @author songzhiheng
  * @version V1.0
@@ -11,6 +13,7 @@ public class  FileBean {
 
     String fileName;
     String filePath;
+    List<DataBean> beans;
 
     public String getFileName() {
         return fileName;
@@ -28,11 +31,20 @@ public class  FileBean {
         this.filePath = filePath;
     }
 
+    public List<DataBean> getBeans() {
+        return beans;
+    }
+
+    public void setBeans(List<DataBean> beans) {
+        this.beans = beans;
+    }
+
     @Override
     public String toString() {
         return "FileBean{" +
                 "fileName='" + fileName + '\'' +
                 ", filePath='" + filePath + '\'' +
+                ", beans=" + beans +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.creditease.selenium.service;
 
 import com.creditease.selenium.Utils.ReadResourceUtils;
+import com.creditease.selenium.bean.DataBean;
 import com.creditease.selenium.bean.FileBean;
 import org.apache.log4j.Logger;
 
@@ -25,16 +26,16 @@ public class ReadFileServiceImpl {
     /**
      * 判断是文件夹还是文件
      *
-     * @param bean
+     * @param filePath
      * @return
      * @throws Exception
      */
-    public static List<String> getList(FileBean bean) throws Exception {
+    public static List<String> getList(String filePath) throws Exception {
         List<String> list = new LinkedList<String>();
-        File file = ReadResourceUtils.getResourceFile(bean.getFilePath());
+        File file = ReadResourceUtils.getResourceFile(filePath);
         BufferedReader bufferedReader = null;
         if (!file.exists()) {
-            logger.info(bean.getFilePath() + "文件夹/不存在！！");
+            logger.info(filePath + "文件夹/不存在！！");
             return null;
         } else {
             File[] files = file.listFiles();
@@ -45,77 +46,85 @@ public class ReadFileServiceImpl {
                 }
                 logger.info("files = " + files.toString());
             } else {
-                //如果是文件则读取文件内容
-                try {
-                    logger.info("file = " + file);
-                    bufferedReader = new BufferedReader(new FileReader(file));
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        list.add(line);
-                        logger.info("line = " + line);
+                list.add(filePath);
+            }
+            return list;
+        }
+    }
+
+        //读取文件内容
+        public static FileBean getContent (String filePath) throws Exception {
+            System.out.println(filePath);
+            BufferedReader bufferedReader = null;
+            List<DataBean> list = new LinkedList<DataBean>();
+            try {
+                bufferedReader = new BufferedReader(new FileReader(filePath));
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    if (line.split(",").length < 6) {
+                        logger.info("case 传餐有误！！");
+                        return null;
+                    } else {
+                        list.add(RepleceBeanServiceImpl.getDataBean(line));
                     }
-                } catch (Exception e) {
-                    logger.info("ReadFileServiceImpl.getList()" + "文件读取失败");
-                } finally {
-                    try{
-                        if (bufferedReader == null){
-                            bufferedReader.close();
-                        }
+                }
+            } catch (Exception e) {
+                logger.info(filePath + "读取文件失败！！");
+            } finally {
+                if (bufferedReader == null) {
                     bufferedReader.close();
-                    }catch (Exception e){
-                        logger.info("ReadFileServiceImpl = " + e);
-                    }
                 }
             }
+            FileBean fileBean = new FileBean();
+            fileBean.setFilePath(filePath);
+            fileBean.setFileName(filePath.split("/")[filePath.split("/").length - 1]);
+            fileBean.setBeans(list);
+            return fileBean;
         }
-        return list;
-    }
 
-    //读取文件内容
-    public static List<Object> getContent(String filePath) throws Exception {
-        System.out.println(filePath);
-        BufferedReader bufferedReader = null;
-        List<Object> list = new LinkedList<Object>();
-        try {
-            bufferedReader = new BufferedReader(new FileReader(filePath));
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                if (line.split(",").length < 6) {
-                    logger.info("case 传餐有误！！");
-                    return null;
-                } else {
-                    list.add(RepleceBeanServiceImpl.getDataBean(line));
-                }
-            }
-        } catch (Exception e) {
-            logger.info(filePath + "读取文件失败！！");
-        } finally {
-            if (bufferedReader == null){
-                bufferedReader.close();
-            }
-        }
-        return list;
-    }
+        //读取
 
-    //读取
-    public static List getContents(List<String> list) throws Exception{
-        List linkedList = new LinkedList();
+    public static List<FileBean> getContents(List<String> list) throws Exception {
+        List<FileBean> linkedList = new LinkedList<FileBean>();
         if (list != null && list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).split(",").length <= 6 && list.get(i).split(",").length > 2) {
-                    linkedList.add(RepleceBeanServiceImpl.getDataBean(list.get(i)));
-                } else {
-                    try {
-                        linkedList.add(ReadFileServiceImpl.getContent(list.get(i)));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    linkedList.add(ReadFileServiceImpl.getContent(list.get(i)));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        } else {
-            logger.info(list + "list is null！！");
         }
         return linkedList;
     }
 
+    public static List initBean(String filePath) throws Exception {
+        List list = getList(filePath);
+        List<FileBean> fileBeans = getContents(list);
+        return fileBeans;
+    }
 }
+/**
+ * //如果是文件则读取 文件内容
+ * try {
+ * logger.info("file = " + file);
+ * bufferedReader = new BufferedReader(new FileReader(file));
+ * String line;
+ * while ((line = bufferedReader.readLine()) != null) {
+ * list.add(line);
+ * logger.info("line = " + line);
+ * }
+ * } catch (Exception e) {
+ * logger.info("ReadFileServiceImpl.getList()" + "文件读取失败");
+ * } finally {
+ * try{
+ * if (bufferedReader == null){
+ * bufferedReader.close();
+ * }
+ * bufferedReader.close();
+ * }catch (Exception e){
+ * logger.info("ReadFileServiceImpl = " + e);
+ * }
+ * }
+ * }
+ */

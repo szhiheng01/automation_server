@@ -23,12 +23,18 @@ public class InitBrowserDriverImpl {
 
     private static Logger logger = Logger.getLogger(InitBrowserDriverImpl.class);
 
+    /**
+     * 初始化浏览器
+     * @param browserType IE浏览器、chrome浏览器、火狐浏览器
+     * @return
+     */
     public static WebDriver initBrowser(String browserType) {
         WebDriver driver = null;
         if (browserType.equals("chrome")) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("disable-infobars");
             driver = new ChromeDriver(options);
+            driver.get("http://www.baidu.com");
         } else if (browserType.equals("fireFox")) {
             driver = new FirefoxDriver();
         } else if (browserType.equals("IE")) {
