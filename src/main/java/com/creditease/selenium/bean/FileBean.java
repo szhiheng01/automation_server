@@ -9,7 +9,7 @@ import java.util.List;
  * @date 2017/8/31 下午2:03
  */
 
-public class  FileBean {
+public class FileBean {
 
     String fileName;
     String filePath;

@@ -28,13 +28,13 @@ public class InitBrowserDriverImpl {
      * @param browserType IE浏览器、chrome浏览器、火狐浏览器
      * @return
      */
-    public static WebDriver initBrowser(String browserType) {
+    public static WebDriver initBrowser(String browserType,String url) {
         WebDriver driver = null;
         if (browserType.equals("chrome")) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("disable-infobars");
             driver = new ChromeDriver(options);
-            driver.get("http://www.baidu.com");
+            driver.get(url);
         } else if (browserType.equals("fireFox")) {
             driver = new FirefoxDriver();
         } else if (browserType.equals("IE")) {

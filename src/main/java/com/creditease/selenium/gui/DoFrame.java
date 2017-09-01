@@ -16,7 +16,6 @@ public class DoFrame extends JFrame{
     private static final int FRAME_X= 400;
     private static final int FRAME_Y= 100;
 
-
     public static void main(String[] args) {
 
         JFrame jFrame = new JFrame();

@@ -1,5 +1,6 @@
 package com.creditease.selenium.controller;
 
+import com.creditease.selenium.Utils.ReadFileUtils;
 import com.creditease.selenium.bean.FileBean;
 import com.creditease.selenium.service.InitBrowserDriverImpl;
 import com.creditease.selenium.service.ReadFileServiceImpl;
@@ -9,6 +10,7 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author songzhiheng
@@ -19,17 +21,17 @@ import java.util.List;
 
 public class RunTestCase {
 
-    private static final String FILE_PATH = "casefile/case_1";
-    public static void main(String[] args) throws Exception{
+    private static final String PROPERTIES_PATH = "init.properties";
 
-        WebDriver driver = InitBrowserDriverImpl.initBrowser("chrome");
-        List list = ReadFileServiceImpl.initBean(FILE_PATH);
-        RunServiceImpl.doRuns(list,driver);
+    public static void main(String[] args) throws Exception {
+        Map<String, String> map = ReadFileUtils.readFile(PROPERTIES_PATH);
+        WebDriver driver = InitBrowserDriverImpl.initBrowser("chrome", map.get("url"));
+        List list = ReadFileServiceImpl.initBean(map.get("filePath"));
+        RunServiceImpl.doRuns(list, driver);
         Thread.sleep(2000);
         driver.quit();
 
     }
-
 
 
 }

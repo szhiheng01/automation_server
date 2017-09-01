@@ -1,6 +1,5 @@
 package com.creditease.selenium.service;
 
-import com.creditease.selenium.Utils.ReadResourceUtils;
 import com.creditease.selenium.bean.DataBean;
 import com.creditease.selenium.bean.FileBean;
 import org.apache.log4j.Logger;
@@ -51,42 +50,42 @@ public class ReadFileServiceImpl {
         }
     }
 
-        //读取文件内容
-        public static FileBean getContent (String filePath) throws Exception {
-            System.out.println(filePath);
-            BufferedReader bufferedReader = null;
-            List<DataBean> list = new LinkedList<DataBean>();
-            try {
-                if (filePath.split("/").length >2){
-                    bufferedReader = new BufferedReader(new FileReader(filePath));
-                }else {
-                    File file = ReadResourceUtils.getResourceFile(filePath);
-                    bufferedReader = new BufferedReader(new FileReader(file));
-                }
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    if (line.split(",").length < 5) {
-                        logger.info("case 传餐有误！！");
-                        return null;
-                    } else {
-                        list.add(RepleceBeanServiceImpl.getDataBean(line));
-                    }
-                }
-            } catch (Exception e) {
-                logger.info(filePath + "读取文件失败！！");
-            } finally {
-                if (bufferedReader == null) {
-                    bufferedReader.close();
+    //读取文件内容
+    public static FileBean getContent(String filePath) throws Exception {
+        System.out.println(filePath);
+        BufferedReader bufferedReader = null;
+        List<DataBean> list = new LinkedList<DataBean>();
+        try {
+            if (filePath.split("/").length > 2) {
+                bufferedReader = new BufferedReader(new FileReader(filePath));
+            } else {
+                File file = ReadResourceUtils.getResourceFile(filePath);
+                bufferedReader = new BufferedReader(new FileReader(file));
+            }
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.split(",").length < 5) {
+                    logger.info("case 传餐有误！！");
+                    return null;
+                } else {
+                    list.add(RepleceBeanServiceImpl.getDataBean(line));
                 }
             }
-            FileBean fileBean = new FileBean();
-            fileBean.setFilePath(filePath);
-            fileBean.setFileName(filePath.split("/")[filePath.split("/").length - 1]);
-            fileBean.setBeans(list);
-            return fileBean;
+        } catch (Exception e) {
+            logger.info(filePath + "读取文件失败！！");
+        } finally {
+            if (bufferedReader == null) {
+                bufferedReader.close();
+            }
         }
+        FileBean fileBean = new FileBean();
+        fileBean.setFilePath(filePath);
+        fileBean.setFileName(filePath.split("/")[filePath.split("/").length - 1]);
+        fileBean.setBeans(list);
+        return fileBean;
+    }
 
-        //读取
+    //读取
 
     public static List<FileBean> getContents(List<String> list) throws Exception {
         List<FileBean> linkedList = new LinkedList<FileBean>();

@@ -51,25 +51,4 @@ public class ReadExcel {
             return null;
         }
     }
-
-
-    public static InputStream openInputStream(String file_open) throws IOException {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-                return classloader.getResourceAsStream(file_open);
-
-    }
-    public static String readFileToString(String file, Charset encoding) throws IOException {
-        InputStream in = null;
-
-        String var;
-        try {
-            in = openInputStream(file);
-            var = IOUtils.toString(in, Charsets.toCharset(encoding));
-        } finally {
-            IOUtils.closeQuietly(in);
-        }
-
-        return var;
-    }
-
 }
