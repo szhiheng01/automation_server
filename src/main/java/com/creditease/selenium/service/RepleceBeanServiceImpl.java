@@ -25,7 +25,6 @@ public class RepleceBeanServiceImpl {
         dataBean.setType(line.split(",")[3]);
         dataBean.setValue(line.split(",")[4]);
         String lineSplit = line.split(",")[5];
-
         String splitLine = lineSplit.substring(1,lineSplit.length() -1);
         for (String i : splitLine.split("、")){
             list.add(i);

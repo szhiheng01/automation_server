@@ -33,7 +33,6 @@ public class ReadFileServiceImpl {
     public static List<String> getList(String filePath) throws Exception {
         List<String> list = new LinkedList<String>();
         File file = ReadResourceUtils.getResourceFile(filePath);
-        BufferedReader bufferedReader = null;
         if (!file.exists()) {
             logger.info(filePath + "文件夹/不存在！！");
             return null;
@@ -58,10 +57,15 @@ public class ReadFileServiceImpl {
             BufferedReader bufferedReader = null;
             List<DataBean> list = new LinkedList<DataBean>();
             try {
-                bufferedReader = new BufferedReader(new FileReader(filePath));
+                if (filePath.split("/").length >2){
+                    bufferedReader = new BufferedReader(new FileReader(filePath));
+                }else {
+                    File file = ReadResourceUtils.getResourceFile(filePath);
+                    bufferedReader = new BufferedReader(new FileReader(file));
+                }
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
-                    if (line.split(",").length < 6) {
+                    if (line.split(",").length < 5) {
                         logger.info("case 传餐有误！！");
                         return null;
                     } else {
@@ -104,27 +108,3 @@ public class ReadFileServiceImpl {
         return fileBeans;
     }
 }
-/**
- * //如果是文件则读取 文件内容
- * try {
- * logger.info("file = " + file);
- * bufferedReader = new BufferedReader(new FileReader(file));
- * String line;
- * while ((line = bufferedReader.readLine()) != null) {
- * list.add(line);
- * logger.info("line = " + line);
- * }
- * } catch (Exception e) {
- * logger.info("ReadFileServiceImpl.getList()" + "文件读取失败");
- * } finally {
- * try{
- * if (bufferedReader == null){
- * bufferedReader.close();
- * }
- * bufferedReader.close();
- * }catch (Exception e){
- * logger.info("ReadFileServiceImpl = " + e);
- * }
- * }
- * }
- */

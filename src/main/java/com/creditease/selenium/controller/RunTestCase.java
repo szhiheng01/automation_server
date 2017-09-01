@@ -19,7 +19,7 @@ import java.util.List;
 
 public class RunTestCase {
 
-    private static final String FILE_PATH = "casefile/";
+    private static final String FILE_PATH = "casefile/case_1";
     public static void main(String[] args) throws Exception{
 
         WebDriver driver = InitBrowserDriverImpl.initBrowser("chrome");

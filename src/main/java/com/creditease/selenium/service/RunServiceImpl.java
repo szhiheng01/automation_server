@@ -70,7 +70,6 @@ public class RunServiceImpl {
                             logger.info("sendKeys of the xpath = " + bean.getValue());
                         }
                     }
-
                 } catch (Exception e) {
                     b = false;
                     break;
@@ -90,7 +89,7 @@ public class RunServiceImpl {
         if (list.size() == 0 || list == null) {
             return;
         }
-        for (FileBean fileBean  : list) {
+        for (FileBean fileBean : list) {
             Map map = doRun(fileBean, driver);
             for (Object key : map.keySet()) {
                 String value = key + "," + (String) map.get(key);
@@ -98,7 +97,5 @@ public class RunServiceImpl {
             }
             logger.info("resoultMap = " + map);
         }
-
     }
-
 }
