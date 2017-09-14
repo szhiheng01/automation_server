@@ -89,13 +89,17 @@ public class RunServiceImpl {
         if (list.size() == 0 || list == null) {
             return;
         }
-        for (FileBean fileBean : list) {
-            Map map = doRun(fileBean, driver);
-            for (Object key : map.keySet()) {
-                String value = key + "," + (String) map.get(key);
-                WriteFileServiceImpl.writeFile(value);
+        try{
+            for (FileBean fileBean : list) {
+                Map map = doRun(fileBean, driver);
+                for (Object key : map.keySet()) {
+                    String value = key + "," + (String) map.get(key);
+                    WriteFileServiceImpl.writeFile(value);
+                }
+                logger.info("resoultMap = " + map);
             }
-            logger.info("resoultMap = " + map);
+        }catch (Exception e){
+            logger.info("RunServiceImpl + e = " + e);
         }
     }
 }

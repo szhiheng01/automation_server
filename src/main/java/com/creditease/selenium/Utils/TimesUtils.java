@@ -20,7 +20,14 @@ import java.util.Calendar;
 public class TimesUtils {
 
 
-    public static WebElement getElement(WebDriver driver, String xpath, int waitTime) {
+    /**
+     * 隐视等待时间
+     * @param driver
+     * @param xpath
+     * @param waitTime
+     * @return
+     */
+    public static WebElement getElement(WebDriver driver, final String xpath, int waitTime) {
 
         WebElement element = (new WebDriverWait(driver, waitTime)).until(new ExpectedCondition<WebElement>() {
             @Override

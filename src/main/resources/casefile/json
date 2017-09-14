@@ -1,0 +1,31 @@
+
+{
+    "data": {
+        "accountName": "王永",
+        "merNo": "0000181",
+          "subCards": [
+              {
+                  "accountBlance": "166.67",
+                  "accountName": "王永",
+                  "accountNo": "6228482908405273774",
+                  "bankName": "农业银行",
+                  "currency": "人民币",
+                  "effectiveType": "0",
+                  "idNo": "610525198605092230",
+                  "subTradeList": [
+                      {
+                          "lastBlance": 166.67,
+                          "recAccount": "",
+                          "recAccountName": "41007800040010999",
+                          "salaryType": "0",
+                          "tradeBlance": 160,
+                          "tradeDesc": "财付通转/微信零钱提现　ＤＦ",
+                          "tradeTime": "2017-07-26 11:37:22",
+                          "tradeType": "IN",
+                          "tradeTypeStr": "收入"
+                      }
+                  ]
+              }
+          ]
+      }
+   }

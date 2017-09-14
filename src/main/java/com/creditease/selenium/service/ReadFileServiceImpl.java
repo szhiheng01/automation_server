@@ -42,7 +42,7 @@ public class ReadFileServiceImpl {
                 for (File fileList : files) {
                     list.add(fileList.toString());
                 }
-                logger.info("files = " + files.toString());
+                logger.info("files = " + files);
             } else {
                 list.add(filePath);
             }
@@ -52,7 +52,6 @@ public class ReadFileServiceImpl {
 
     //读取文件内容
     public static FileBean getContent(String filePath) throws Exception {
-        System.out.println(filePath);
         BufferedReader bufferedReader = null;
         List<DataBean> list = new LinkedList<DataBean>();
         try {
@@ -90,7 +89,7 @@ public class ReadFileServiceImpl {
     public static List<FileBean> getContents(List<String> list) throws Exception {
         List<FileBean> linkedList = new LinkedList<FileBean>();
         if (list != null && list.size() > 0) {
-            for (int i = 0; i < list.size(); i++) {
+                for (int i = 0; i < list.size(); i++) {
                 try {
                     linkedList.add(ReadFileServiceImpl.getContent(list.get(i)));
                 } catch (Exception e) {

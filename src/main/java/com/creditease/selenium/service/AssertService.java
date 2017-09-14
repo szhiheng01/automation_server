@@ -16,28 +16,28 @@ public class AssertService {
 
     private static Logger logger = Logger.getLogger(AssertService.class);
 
-    public static boolean assertPage(WebDriver driver, List list){
+    public static boolean assertPage(WebDriver driver, List list) {
 
+        logger.info("list = " + list.toString());
         boolean flag = true;
-        try{
-            if (list.size() == 0 || list != null) {
-
-            }else {
+        try {
+            if (list.size() == 0 || list == null) {
+                    flag = false;
+            } else {
                 for (Object assertContent : list) {
-                    if (driver.getPageSource().equals(assertContent)) {
+                    if (driver.getPageSource().contains(assertContent.toString())) {
                         flag = true;
-                    }else {
+                    } else {
                         flag = false;
+                        break;
                     }
                 }
             }
-            logger.info("list = " + list.toString());
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.info("AssertService e = " + e);
         }
         return flag;
     }
-
 
 
 }
